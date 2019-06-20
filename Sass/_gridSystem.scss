@@ -1,0 +1,92 @@
+//宣告需要的gutter width
+$gutter-width: 30px;
+//宣告grid要的總欄位數
+$grid-num: 12;
+
+/*記得要套用gridSystem該專案要寫入border-box，為了讓gutter可以設置絕對數值*/
+*{
+    box-sizing: border-box;
+}
+
+//設定一個最外層容器包覆整個網頁內容
+.container{
+    margin: 0 auto;
+    max-width: 960px; //此寬度可根據需求更改
+    padding-left: ($gutter-width/2);
+    padding-right: ($gutter-width/2);
+}
+
+//因為grid是用flex排版，因此設定一個flex外容器
+.row{
+    display: flex;
+    margin-right: -($gutter-width/2);
+    margin-left: -($gutter-width/2);
+    flex-wrap: wrap;
+}
+//透過extend將格線統一整理(這裡是由低解析度往上設計故max-width設定100%)，預設解析度為320px
+%col{
+    max-width: 100%;
+    padding-right: ($gutter-width/2);
+    padding-left: ($gutter-width/2);
+    flex: 0 0 100%;
+}
+//透過for快速設定每組格線寬度
+@for $i from 1 through $grid-num {
+    .col-#{$i}{
+        @extend %col;
+    }
+}
+
+@for $i from 1 through $grid-num {
+    .col-sm-#{$i}{
+        @extend %col;
+    }
+}
+
+@for $i from 1 through $grid-num {
+    .col-md-#{$i}{
+        @extend %col;
+    }
+}
+
+@for $i from 1 through $grid-num {
+    .col-lg-#{$i}{
+        @extend %col;
+    }
+}
+//設計斷點以上根據設定的class產生不同寬度
+@include breakpoint-xs{
+        @for $i from 1 through $grid-num {
+            .col-#{$i}{
+                max-width: 100% * ($i/$grid-num);
+                flex: 0 0 100% * ($i/$grid-num);
+        }
+    }
+}
+
+@include breakpoint-sm{
+    @for $i from 1 through $grid-num {
+        .col-sm-#{$i}{
+            max-width: 100% * ($i/$grid-num);
+            flex: 0 0 100% * ($i/$grid-num);
+    }
+}
+}
+
+@include breakpoint-md{
+    @for $i from 1 through $grid-num {
+        .col-md-#{$i}{
+            max-width: 100% * ($i/$grid-num);
+            flex: 0 0 100% * ($i/$grid-num);
+    }
+}
+}
+
+@include breakpoint-lg{
+    @for $i from 1 through $grid-num {
+        .col-lg-#{$i}{
+            max-width: 100% * ($i/$grid-num);
+            flex: 0 0 100% * ($i/$grid-num);
+    }
+}
+}
